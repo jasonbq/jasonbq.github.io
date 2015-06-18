@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-CocoaPods" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/06/18/CocoaPods/" class="article-date">
+  <time datetime="2015-06-18T01:57:22.000Z" itemprop="datePublished">2015-06-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/18/CocoaPods/">CocoaPods</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="初始化_Cocoapods">初始化 Cocoapods</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">pod</span> init</span><br></pre></td></tr></table></figure>
+<p>执行以上语句，Cocoapods 会创建默认的 <code>Podfile</code>。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Uncomment this line to define a global platform for your project</span></span><br><span class="line"><span class="comment"># platform :ios, '6.0'</span></span><br><span class="line"> </span><br><span class="line">target <span class="string">'XDream'</span> <span class="keyword">do</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">target <span class="string">'XDreamTests'</span> <span class="keyword">do</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="修改平台和使用_frameworks">修改平台和使用 frameworks</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">platform <span class="symbol">:ios</span>, <span class="string">"8.0"</span></span><br><span class="line">use_frameworks!</span><br></pre></td></tr></table></figure>
+<h2 id="为什么_Swift_要使用_dynamic_frameworks">为什么 Swift 要使用 dynamic frameworks</h2><p>当说起 <code>Swift library</code> 时， 实际上是指 <code>Swift dynamic framework</code>，因为 <code>Swift static libraries</code>是不被允许。<br>iOS 8 推出的 <code>dynamic frameworks</code> 允许把代码，图象和其它资源打包在一起。在 iOS 8 之前，Cocoapods 以 <code>static libraries</code><br>创建，当中只包含代码（可以包含不同的指令集，比如 i386, armv7）, 但不能包含图象这些资源。</p>
+<p>第二个不同点是，<code>dynamic frameworks</code> 可以有 <code>namespace classes</code>， 然而 <code>static libraries</code> 不能。</p>
+<p>不像 Objective-C，标准的 Swift runtime libraries 没有包含在 iOS 中！ 所以你的 framework 必须包含必要的 runtime libraries.<br>正因为如此，用 Swift 写的 pods 必须被创建成 <code>dynamic frameworks</code>。如果苹果允许 <code>static libraries</code>, 使用标准 <code>runtime dependencies</code><br>的 libraries 会出现重复标识（因为 static libraries 没有 namespace）。</p>
+<h2 id="安装_pods">安装 pods</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Uncomment this line to define a global platform for your project</span></span><br><span class="line">platform <span class="symbol">:ios</span>, <span class="string">'8.0'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Using frameworks instead of static library</span></span><br><span class="line">use_frameworks!</span><br><span class="line">target <span class="string">'XDream'</span> <span class="keyword">do</span></span><br><span class="line">pod <span class="string">'Alamofire'</span>, <span class="string">'1.2.3'</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">target <span class="string">'XDreamTests'</span> <span class="keyword">do</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>然后执行 <code>pod install</code> 命令， 在城内，很多时候会安装失败， 需要梯子方能安装成功。<br>安装成功，会看到以下的打印信息。注意最后一条，现在我们要使用 <code>.xcworkspace</code> 的文件来打开项目。<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Analyzing <span class="keyword">dependencies</span></span><br><span class="line">Downloading <span class="keyword">dependencies</span></span><br><span class="line">Installing Alamofire (<span class="number">1.2</span>.<span class="number">3</span>)</span><br><span class="line">Generating Pods <span class="keyword">project</span></span><br><span class="line">Integrating client <span class="keyword">project</span></span><br><span class="line"></span><br><span class="line">[!] Please close <span class="keyword">any</span> current Xcode sessions and use `XDream.xcworkspace` <span class="keyword">for</span> <span class="keyword">this</span> <span class="keyword">project</span> <span class="keyword">from</span> now on.</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/06/18/CocoaPods/" data-id="cib1jhkh10000400blqsif7ml" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/06/18/CocoaPods/">CocoaPods</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
