@@ -65,6 +65,56 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-ScalingFilters" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/06/18/ScalingFilters/" class="article-date">
+  <time datetime="2015-06-18T03:03:57.000Z" itemprop="datePublished">2015-06-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/18/ScalingFilters/">ScalingFilters</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="三种不同的_Scaling_Filters">三种不同的 Scaling Filters</h2><ul>
+<li>kCAFilterLinear</li>
+<li>kCAFilterNearest</li>
+<li>kCAFilterTrilinear</li>
+</ul>
+<h3 id="三种_Scaling_Filters_的特点">三种 Scaling Filters 的特点</h3><p>kCAFilterLinear 使用 Bilinear filtering 算法，采样多个象素来生成最终的图象。</p>
+<p>优点: 圆滑，流畅<br>缺点: 如果放大的比较够大，图象会出现模糊<br>kCAFilterTrilinear 跟 kCAFilterLinear 类似。大多数情况下，两者在视觉上并没有太大 的差异。但是 kCAFilterTrilinear 保存多个图象的尺寸(Mip-mapping)，然后在三个不同的维 度采样，组合较大和较小的存储的图象，来生成最终的图象。kCAFilterTrilinear 改善了性能。</p>
+<p>优点: 由于最终的图象的在尽寸跟保存的图象已经非常接近，所以不用同时采样较多的象素，从而提 高了性能和避免了在 scale factors 较小的情况下出现的问题（rounding errors）。<br>kCAFilterNearest 就像它的名字暗示一样，只会采用最接近的单象素，并且不对颜色进行渲染。</p>
+<p>优点: 速度非常快, 保留原来图象，只处理边缘部分 缺点: 图象质量很差，出现象素化</p>
+<h3 id="总结">总结</h3><p>Linear filtering 保留形状，kCAFilterLinear 和 kCAFilterTrilinear。 Nearest-neighbor filtering 保留象素, kCAFilterNearest。</p>
+<h4 id="例子">例子</h4><p>当我们不设置 magnificationFilter , 默认为 kCAFilterLinear。图象就变得非常模糊。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">view.layer.contents = digits?.<span class="type">CGImage</span></span><br><span class="line">view.layer.contentsRect = <span class="type">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0.1</span>, <span class="number">0.1</span>)</span><br><span class="line">view.layer.contentsGravity = kCAGravityResizeAspect</span><br></pre></td></tr></table></figure>
+<p>当我们把 magnificationFilter 设置成 kCAFilterNearest，字体马上变得很清晰，原因是我们使用的 backing image 是很小的，我们把图象的 frame 调置成比原来图象大时，图象就会变得 模糊。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">view.layer.contents = digits?.<span class="type">CGImage</span></span><br><span class="line">view.layer.contentsRect = <span class="type">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0.1</span>, <span class="number">0.1</span>)</span><br><span class="line">view.layer.contentsGravity = kCAGravityResizeAspect</span><br><span class="line">view.layer.magnificationFilter = kCAFilterNearest</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/06/18/ScalingFilters/" data-id="cib1ltroa0001i50byp6skkpj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-CocoaPods" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/06/18/CocoaPods/" class="article-date">
@@ -100,7 +150,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/06/18/CocoaPods/" data-id="cib1ljkw50000ci0bwavhf1yn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/06/18/CocoaPods/" data-id="cib1ltrnn0000i50bv49fhb57" class="article-share-link">Share</a>
       
       
     </footer>
@@ -125,7 +175,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -135,6 +185,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/06/18/ScalingFilters/">ScalingFilters</a>
+          </li>
         
           <li>
             <a href="/2015/06/18/CocoaPods/">CocoaPods</a>
